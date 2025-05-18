@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+      <div class="card shadow rounded-4">
+        <div class="card-header bg-primary text-white text-center py-3 rounded-top-4">
+          <h4 class="mb-0">📝 User Registration</h4>
+        </div>
+        <div class="card-body p-4">
+          <form method="post" class="needs-validation" novalidate>
+            {% csrf_token %}
+
+            <div class="mb-3">
+              <label for="id_username" class="form-label fw-semibold">Username</label>
+              <input type="text" name="username" id="id_username" class="form-control form-control-lg rounded-3" required>
+              <div class="invalid-feedback">
+                Please enter a username.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="id_email" class="form-label fw-semibold">Email address</label>
+              <input type="email" name="email" id="id_email" class="form-control form-control-lg rounded-3" required>
+              <div class="invalid-feedback">
+                Please enter a valid email.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="id_dob" class="form-label fw-semibold">Date of Birth</label>
+              <input type="date" name="date_of_birth" id="id_dob" class="form-control form-control-lg rounded-3" required>
+              <div class="invalid-feedback">
+                Please select your date of birth.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-semibold d-block">Gender</label>
+              <div class="d-flex gap-4">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="gender" id="genderMale" value="Male" checked required>
+                  <label class="form-check-label" for="genderMale">Male</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="gender" id="genderFemale" value="Female" required>
+                  <label class="form-check-label" for="genderFemale">Female</label>
+                </div>
+              </div>
+              <div class="invalid-feedback">
+                Please select your gender.
+              </div>
+            </div>
+
+            <!-- Password  -->
+            <div class="mb-3">
+              <label for="id_password1" class="form-label fw-semibold">Password</label>
+              <div class="input-group input-group-lg rounded-3 shadow-sm">
+                <input type="password" name="password1" id="id_password1" class="form-control rounded-3" required aria-describedby="togglePassword1">
+                <button class="btn btn-outline-secondary rounded-3" type="button" id="togglePassword1" tabindex="-1" aria-label="Toggle password visibility">
+                  <i class="bi bi-eye"></i>
+                </button>
+                <div class="invalid-feedback">
+                  Please enter a password.
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label for="id_password2" class="form-label fw-semibold">Confirm Password</label>
+              <div class="input-group input-group-lg rounded-3 shadow-sm">
+                <input type="password" name="password2" id="id_password2" class="form-control rounded-3" required aria-describedby="togglePassword2">
+                <button class="btn btn-outline-secondary rounded-3" type="button" id="togglePassword2" tabindex="-1" aria-label="Toggle password visibility">
+                  <i class="bi bi-eye"></i>
+                </button>
+                <div class="invalid-feedback">
+                  Please confirm your password.
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg w-100 rounded-pill">Register</button>
+          </form>
+
+          <div class="text-center mt-3">
+            <small>Already have an account? <a href="{% url 'login' %}">Login here</a></small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  
+  .form-check-input[type="radio"] {
+    width: 1.25em;
+    height: 1.25em;
+    margin-top: 0.25em;
+  }
+  .form-check-label {
+    margin-left: 0.35em;
+    font-weight: 500;
+    user-select: none;
+  }
+</style>
+
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+<script>
+(() => {
+  'use strict';
+  const forms = document.querySelectorAll('.needs-validation');
+  Array.from(forms).forEach(form => {
+    form.addEventListener('submit', event => {
+      if (!form.checkValidity()) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      form.classList.add('was-validated');
+    }, false);
+  });
+
+  // Toggle password 
+  const togglePassword = (buttonId, inputId) => {
+    const toggleBtn = document.getElementById(buttonId);
+    const input = document.getElementById(inputId);
+    const icon = toggleBtn.querySelector('i');
+
+    toggleBtn.addEventListener('click', () => {
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.remove('bi-eye');
+        icon.classList.add('bi-eye-slash');
+      } else {
+        input.type = 'password';
+        icon.classList.remove('bi-eye-slash');
+        icon.classList.add('bi-eye');
+      }
+    });
+  };
+
+  togglePassword('togglePassword1', 'id_password1');
+  togglePassword('togglePassword2', 'id_password2');
+})();
+</script>
+{% endblock %}

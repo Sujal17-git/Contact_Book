@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-5 col-lg-4">
+      <div class="card shadow rounded-4">
+        <div class="card-header bg-primary text-white text-center py-3 rounded-top-4">
+          <h4 class="mb-0">🔐 Login</h4>
+        </div>
+        <div class="card-body p-4">
+          <form method="post" class="needs-validation" novalidate>
+            {% csrf_token %}
+            
+            <div class="mb-3">
+              <label for="id_username" class="form-label fw-semibold">Username</label>
+              <input type="text" name="username" id="id_username" class="form-control form-control-lg rounded-3" required>
+              <div class="invalid-feedback">
+                Please enter your username.
+              </div>
+            </div>
+            
+            <div class="mb-4">
+              <label for="id_password" class="form-label fw-semibold d-block">Password</label>
+              <input type="password" name="password" id="id_password" class="form-control form-control-lg rounded-3" required>
+              
+              <div class="form-check form-check-inline mt-2">
+                <input class="form-check-input" type="checkbox" id="showPassword">
+                <label class="form-check-label" for="showPassword" style="user-select:none;">Show Password</label>
+              </div>
+              
+              <div class="invalid-feedback">
+                Please enter your password.
+              </div>
+            </div>
+            
+            <button type="submit" class="btn btn-primary btn-lg w-100 rounded-pill">Login</button>
+          </form>
+
+          <div class="text-center mt-3">
+            <small>Don't have an account? <a href="{% url 'register' %}">Register here</a></small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(() => {
+  'use strict'
+  const forms = document.querySelectorAll('.needs-validation')
+  Array.from(forms).forEach(form => {
+    form.addEventListener('submit', event => {
+      if (!form.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+      form.classList.add('was-validated')
+    }, false)
+  })
+
+  const showPasswordCheckbox = document.getElementById('showPassword');
+  const passwordInput = document.getElementById('id_password');
+
+  showPasswordCheckbox.addEventListener('change', () => {
+    if (showPasswordCheckbox.checked) {
+      passwordInput.type = 'text';
+    } else {
+      passwordInput.type = 'password';
+    }
+  });
+})();
+</script>
+
+{% endblock %}
